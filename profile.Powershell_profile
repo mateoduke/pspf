@@ -1,0 +1,23 @@
+function prompt {
+    $currentDirectory = Get-Location
+    $currentTime = Get-Date -Format 'HH:mm:ss'
+
+    $gitStatus = Get-GitStatus
+
+    Write-Host -NoNewline -ForegroundColor Green "`n[$currentDirectory]"
+    Write-Host -NoNewline -ForegroundColor Cyan " $gitStatus"
+    Write-Host -NoNewline -ForegroundColor Red "`n[$currentTime]"
+    Write-Host -NoNewline -ForegroundColor White " $"
+
+    return " "
+}
+
+function Get-GitStatus {
+    $gitBranch = $(git symbolic-ref --short HEAD 2> $null)
+
+    if ($gitBranch) {
+        return "($gitBranch)"
+    } else {
+        return ""
+    }
+}
